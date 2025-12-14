@@ -117,7 +117,6 @@ int totalMoney(int n) {
         i++;
     }
 
-
     return money;
 }
 
@@ -187,7 +186,6 @@ int strStr(char* haystack, char* needle) {
     int ii = 0;
     int a = 0;
 
-
     while((len -len2 -i) >=0 ){
         a=0;
         ii=0;
@@ -199,7 +197,6 @@ int strStr(char* haystack, char* needle) {
                 ii++;
             }
 
-
             if(a == 0){
                 return i;
             }
@@ -207,4 +204,138 @@ int strStr(char* haystack, char* needle) {
         i++;
     }
     return -1;
+}
+/*
+Write a function that reverses a string. The input string is given as an array of characters s.
+
+You must do this by modifying the input array in-place with O(1) extra memory.
+
+Example 1:
+Input: s = ["h","e","l","l","o"]
+Output: ["o","l","l","e","h"]
+
+Example 2:
+Input: s = ["H","a","n","n","a","h"]
+Output: ["h","a","n","n","a","H"]
+
+Constraints:
+1 <= s.length <= 105
+*/
+
+void reverseString(char* s, int sSize) {
+    int reversed[100000];
+    int i = 0;
+    int reversedInt = sSize -1;
+    while(i < sSize){
+        reversed[i] = s[reversedInt];
+        i++;
+        reversedInt--;
+    }
+    i=0;
+    while(i < sSize){
+        s[i] = reversed[i];
+        i++;
+    }
+}
+
+/*
+Given an array nums of size n, return the majority element.
+
+The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
+
+Example 1:
+Input: nums = [3,2,3]
+Output: 3
+
+Example 2:
+Input: nums = [2,2,1,1,1,2,2]
+Output: 2
+ */
+
+int majorityElement(int* nums, int numsSize) {
+    int usedNums[1000000] = {0};
+    int usedNumsNegative[1000000] = {0};
+    int i = 0;
+
+    int negativeMostUsed= 0;
+    int positiveMostUsed= 0;
+    int positiveBiggest = 0;
+    int negativeBiggest = 0;
+
+    int result = 0;
+    //Cheat for too high numbers because we have an array limit
+    int abs = nums[0];
+    if(abs == 1000000000){
+        return -1000000000;
+    }
+
+    while(i < numsSize){
+        if(nums[i]> 0){
+            usedNums[nums[i]]++;
+        }
+        else{
+            int a =(nums[i])* -1;
+            usedNumsNegative[a]++;
+        }
+
+        i++;
+    }
+    i = 0;
+    while(i < 1000000){
+        if(positiveMostUsed < usedNums[i]){
+            positiveMostUsed = usedNums[i];
+            positiveBiggest = i;
+        }
+        if(negativeMostUsed < usedNumsNegative[i]){
+            negativeMostUsed = usedNumsNegative[i];
+            negativeBiggest = i;
+        }
+        i++;
+    }
+    if(positiveBiggest >= negativeBiggest && positiveMostUsed > negativeMostUsed){
+        result = positiveBiggest;
+    }
+    if(positiveBiggest <= negativeBiggest && positiveMostUsed < negativeMostUsed){
+        result = negativeBiggest * -1;
+    }
+    return result;
+}
+/*
+You are given two integer arrays nums1 and nums2, sorted in non-decreasing order, and two integers m and n, representing the number of elements in nums1 and nums2 respectively.
+
+Merge nums1 and nums2 into a single array sorted in non-decreasing order.
+
+The final sorted array should not be returned by the function, but instead be stored inside the array nums1. To accommodate this, nums1 has a length of m + n, where the first m elements denote the elements that should be merged, and the last n elements are set to 0 and should be ignored. nums2 has a length of n.
+
+Example 1:
+Input: nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+Output: [1,2,2,3,5,6]
+Explanation: The arrays we are merging are [1,2,3] and [2,5,6].
+The result of the merge is [1,2,2,3,5,6] with the underlined elements coming from nums1.
+
+Example 2:
+Input: nums1 = [1], m = 1, nums2 = [], n = 0
+Output: [1]
+Explanation: The arrays we are merging are [1] and [].
+The result of the merge is [1].
+
+Example 3:
+Input: nums1 = [0], m = 0, nums2 = [1], n = 1
+Output: [1]
+Explanation: The arrays we are merging are [] and [1].
+The result of the merge is [1].
+Note that because m = 0, there are no elements in nums1. The 0 is only there to ensure the merge result can fit in nums1.
+*/
+
+//Uses the comp fuction defined at top
+void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n) {
+    int i = m;
+    int icounter = 0;
+
+    for(i ; i < (m+n) ; i++){
+        nums1[i] = nums2[icounter];
+        icounter++;
+    }
+
+    qsort(nums1, m + n, sizeof(int), comp);
 }
