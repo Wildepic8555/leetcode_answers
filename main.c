@@ -128,12 +128,9 @@ int smallestNumber(int n) {
     int arrayPointer = 0;
     int number[1000];
     int binary[1000];
-    int half  [1000];
     int lazyBinary = 1;
     int sum = 0;
-    for(int i = 0; i < 1000; i++) {
-        half[i] = i;
-    }
+
     for(int i = 0; i < 20; i++) {
         binary[i] = lazyBinary;
         lazyBinary = lazyBinary *2;
@@ -360,15 +357,16 @@ char* longestCommonPrefix(char** strs, int strsSize) {
     int i = 0;
     bool isTrue = true;
     int sameCount = 0;
-
+    //If nothing
     if(strcmp(strs[0], "") == 0){
         isTrue = false;
     }
+    //If only one string
     else if(strsSize == 1){
         strs[0][1] = '\0';
         return strs[0];
     }
-
+    //If same string all over
     for(i = 0; i < strsSize ; i++){
         if(strcmp(strs[i], strs[0]) == 0){
             sameCount++;
@@ -377,7 +375,7 @@ char* longestCommonPrefix(char** strs, int strsSize) {
     if(sameCount == strsSize){
         return strs[0];
     }
-
+    //Common Prefix of strings
     while(isTrue){
         for(i = 0; i < strsSize && strsSize > 1; i++){
             if(strs[i][prefixLen] != strs[0][prefixLen]){
@@ -391,6 +389,7 @@ char* longestCommonPrefix(char** strs, int strsSize) {
             isTrue = false;
         }
     }
+    //This cuts the string at position prefixLen
     strs[0][prefixLen] = '\0';
     return strs[0];
 }
