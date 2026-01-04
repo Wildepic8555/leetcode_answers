@@ -23,9 +23,11 @@ bool canConstruct(char* ransomNote, char* magazine) {
     for(int i = 0 ; i < len ; i++){
         ransomAsciiArray[ransomNote[i]]++;
     }
+
     for(int i = 0 ; i < len2 ; i++){
         magazineAsciiArray[magazine[i]]++;
     }
+
     for( int i = 0 ; i < 200 ; i++){
         if((magazineAsciiArray[i] - ransomAsciiArray[i] ) >= 0){
 
